@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bobby</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-inner">
+      <div class="side-head">
+        <div class="brand"><img class="logo" src="/bobby.png" alt="">Bobby</div>
+        <div class="side-actions">
+          <button type="button" id="feed-open" class="icon-btn" aria-label="Feed knowledge" title="Feed knowledge">
+            <svg class="i" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5zm0 0A2.5 2.5 0 0 0 6.5 22H20v-5M12 7v6M9 10h6"/></svg>
+          </button>
+          <button type="button" id="collapse" class="icon-btn" aria-label="Hide sidebar" title="Hide sidebar">
+            <svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="button" id="new-chat" class="btn dark">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New chat
+      </button>
+      <button type="button" id="new-email" class="btn light">
+        <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>New email draft
+      </button>
+      <div class="search-wrap">
+        <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="search" class="search" placeholder="Search chats" aria-label="Search chats">
+      </div>
+      <nav id="history" class="history" aria-label="Conversations"></nav>
+      <div id="toasts" class="toasts" aria-live="polite"></div>
+      <div class="side-foot">
+        <div id="user-menu" class="user-menu" hidden>
+          <button type="button" id="open-admin" class="menu-item" hidden>
+            <svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Admin
+          </button>
+          <button type="button" id="open-password" class="menu-item">
+            <svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Change password
+          </button>
+          <button type="button" id="logout-all" class="menu-item">
+            <svg class="i" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M9 6h6"/></svg>Sign out everywhere
+          </button>
+        </div>
+        <button type="button" id="user-btn" class="user" aria-haspopup="true" aria-expanded="false" title="Account">
+          <span id="avatar" class="avatar" aria-hidden="true"></span>
+          <span id="user-name" class="user-name"></span>
+        </button>
+        <button type="button" id="logout" class="icon-btn" aria-label="Sign out" title="Sign out">
+          <svg class="i" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main is-empty" id="main">
+    <header class="topbar">
+      <button type="button" id="menu" class="icon-btn menu" aria-label="Show sidebar" title="Show sidebar">
+        <svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+      </button>
+      <button type="button" id="status" class="status" title="Check connection">
+        <span class="dot"></span><span id="status-text">Checking…</span>
+      </button>
+      <h1 id="title">New chat</h1>
+      <button type="button" id="clear" class="btn outline">
+        <svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"/></svg>Clear chat
+      </button>
+      <button type="button" id="export" class="btn outline" disabled>
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>Export chat
+      </button>
+    </header>
+
+    <div class="stage">
+      <div id="hero" class="hero">
+        <img class="hero-logo" src="/bobby.png" alt="">
+        <div id="hello" class="hello">Hello Support team</div>
+        <h2 id="ask" class="ask">How can Bobby help you today?</h2>
+      </div>
+
+      <section id="messages" class="messages" aria-live="polite">
+        <div id="thread" class="thread"></div>
+      </section>
+
+      <form id="composer" class="composer">
+        <div class="card">
+          <textarea id="input" rows="2" placeholder="Ask Bobby anything…" aria-label="Message"></textarea>
+          <div class="ctx" id="ctx-wrap" inert>
+            <div class="ctx-inner">
+              <textarea id="context" rows="2" class="context" placeholder="Context (optional)" aria-label="Additional context"></textarea>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="chips">
+              <button type="button" id="mode-chat" class="chip active">
+                <svg class="i" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>Chat
+              </button>
+              <button type="button" id="mode-email" class="chip">
+                <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email draft
+              </button>
+            </div>
+            <button type="submit" id="send" class="send" aria-label="Send">
+              <svg class="i" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div id="cards" class="cards">
+        <button type="button" class="suggest" data-action="email">
+          <svg class="i lg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <strong>Draft an email reply</strong>
+          <span>Reply to a customer message.</span>
+        </button>
+        <button type="button" class="suggest" data-prompt="Summarize the following into 5 key bullet points:&#10;&#10;">
+          <svg class="i lg" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          <strong>Summarize text</strong>
+          <span>Turn notes into key points.</span>
+        </button>
+        <button type="button" class="suggest" data-prompt="Write clear step-by-step instructions for: ">
+          <svg class="i lg" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8"/></svg>
+          <strong>Write a procedure</strong>
+          <span>Write clear numbered steps.</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+<dialog id="confirm" class="modal" aria-labelledby="confirm-title">
+  <form method="dialog">
+    <h3 id="confirm-title"></h3>
+    <p id="confirm-text"></p>
+    <div class="modal-actions">
+      <button type="submit" value="cancel" class="btn outline">Cancel</button>
+      <button type="submit" value="ok" id="confirm-ok" class="btn danger"></button>
+    </div>
+  </form>
+</dialog>
+<dialog id="feed" class="modal feed" aria-labelledby="feed-title">
+  <form id="feed-form">
+    <h3 id="feed-title">Feed Bobby</h3>
+    <p>Paste notes, or attach or drop .txt files.</p>
+    <textarea id="feed-text" class="field feed-text" rows="7" aria-label="Knowledge text" placeholder="Paste notes here"></textarea>
+    <div id="feed-files" class="feed-files"></div>
+    <div id="feed-results" class="feed-results" aria-live="polite"></div>
+    <div class="modal-actions">
+      <label class="btn outline attach">
+        <svg class="i" viewBox="0 0 24 24"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7"/></svg>Attach .txt
+        <input type="file" id="feed-file" accept=".txt,.md,text/plain" multiple hidden>
+      </label>
+      <button type="button" id="feed-close" class="btn outline">Close</button>
+      <button type="submit" id="feed-save" class="btn dark">Add to knowledge</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="pw" class="modal" aria-labelledby="pw-title">
+  <form id="pw-form">
+    <h3 id="pw-title">Change password</h3>
+    <p id="pw-text">Other devices will be signed out.</p>
+    <div class="stack">
+      <input id="pw-current" class="field" type="password" placeholder="Current password" aria-label="Current password" autocomplete="current-password">
+      <input id="pw-new" class="field" type="password" placeholder="New password (8+ characters)" aria-label="New password" autocomplete="new-password">
+      <input id="pw-repeat" class="field" type="password" placeholder="Repeat new password" aria-label="Repeat new password" autocomplete="new-password">
+    </div>
+    <p id="pw-error" class="form-error" role="alert"></p>
+    <div class="modal-actions">
+      <button type="button" id="pw-cancel" class="btn outline">Cancel</button>
+      <button type="submit" id="pw-save" class="btn dark">Save</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="admin" class="modal admin" aria-labelledby="admin-title">
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <h3 id="admin-title">Admin</h3>
+      <div class="tabs">
+        <button type="button" class="chip active" data-tab="users">Users</button>
+        <button type="button" class="chip" data-tab="cases">Knowledge</button>
+      </div>
+      <button type="button" id="admin-close" class="icon-btn" aria-label="Close" title="Close">
+        <svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <p id="admin-msg" class="admin-msg" role="status"></p>
+    <section id="tab-users" class="admin-tab">
+      <div class="tab-bar">
+        <span id="user-count" class="tab-title">Team</span>
+        <button type="button" id="toggle-add" class="btn outline">
+          <svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add user
+        </button>
+      </div>
+      <form id="add-user" class="add-user" hidden>
+        <input id="new-username" class="field" placeholder="Username" aria-label="Username" autocomplete="off">
+        <input id="new-password" class="field" type="password" placeholder="Password (8+ characters)" aria-label="Password" autocomplete="new-password">
+        <div class="add-user-foot">
+          <label class="check"><input type="checkbox" id="new-admin"><span>Make admin</span></label>
+          <button type="button" id="cancel-add" class="btn outline">Cancel</button>
+          <button type="submit" class="btn dark">Add user</button>
+        </div>
+      </form>
+      <div id="user-list" class="admin-list"></div>
+    </section>
+    <section id="tab-cases" class="admin-tab" hidden>
+      <input type="search" id="case-search" class="field" placeholder="Search knowledge" aria-label="Search knowledge">
+      <div id="case-list" class="admin-list"></div>
+    </section>
+  </div>
+</dialog>
+<dialog id="case-dlg" class="modal case-dlg" aria-labelledby="case-dlg-title">
+  <form id="case-form">
+    <h3 id="case-dlg-title">Edit case</h3>
+    <div class="stack">
+      <label class="lbl">Title<input id="case-title" class="field" maxlength="200"></label>
+      <label class="lbl">Problem<textarea id="case-problem" class="field" rows="3"></textarea></label>
+      <label class="lbl">Cause (optional)<textarea id="case-cause" class="field" rows="2"></textarea></label>
+      <label class="lbl">Fix<textarea id="case-fix" class="field" rows="6"></textarea></label>
+    </div>
+    <p id="case-error" class="form-error" role="alert"></p>
+    <div class="modal-actions">
+      <button type="button" id="case-cancel" class="btn outline">Cancel</button>
+      <button type="submit" id="case-save" class="btn dark">Save</button>
+    </div>
+  </form>
+</dialog>
+<script src="/app.js"></script>
+</body>
+</html>

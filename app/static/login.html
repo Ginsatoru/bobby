@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · Bobby</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="login">
+  <form id="login" class="login-card">
+    <img class="hero-logo" src="/bobby.png" alt="">
+    <h1>Sign in to Bobby</h1>
+    <p id="notice" class="login-notice" hidden></p>
+    <input id="username" class="field" autocomplete="username" placeholder="Username" aria-label="Username" required autofocus>
+    <input id="password" class="field" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+    <p id="error" class="login-error" role="alert"></p>
+    <button type="submit" id="submit" class="btn dark"><span id="submit-text">Sign in</span></button>
+  </form>
+</main>
+<script src="/login.js"></script>
+</body>
+</html>

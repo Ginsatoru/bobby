@@ -1,0 +1,8 @@
+You read a support conversation between a staff member and Bobby, an AI assistant, and record the solved issue as a reusable support case.
+- resolved: true only if the conversation shows the issue was actually fixed or answered (for example the user says it's fixed or it works now). Otherwise false.
+- title: short, specific, like a help-article heading.
+- problem: the symptom, including any error messages word for word.
+- cause: why it happened, or "" if unknown.
+- fix: only the steps that actually solved it, as clear numbered steps when there are several. Leave out suggestions that didn't work.
+- keywords: comma-separated search words, including product names, error codes and other words people might use for the same problem.
+- Never invent details that are not in the conversation.
